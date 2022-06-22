@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.databinding.FragmentNewsBinding
+import com.example.newsapp.models.News
 
 class NewsFragment : Fragment() {
 
@@ -29,8 +30,9 @@ class NewsFragment : Fragment() {
 
     private fun save() {
         val text = binding.editText.text.toString().trim()
+        val news = News(text, System.currentTimeMillis())
         val bundle = Bundle()
-        bundle.putString("text", text)
+        bundle.putSerializable("news", news)
         // findNavController().navigate(R.id.navigation_home, bundle)
         parentFragmentManager.setFragmentResult("rk_news", bundle)
         findNavController().navigateUp()
