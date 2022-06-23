@@ -13,6 +13,8 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding
 
+    private var news: News? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,6 +25,12 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        news = arguments?.getSerializable("news") as News?
+
+        news?.let {
+            binding.editText.setText(it.title)
+        }
+
         binding.btnSave.setOnClickListener {
             save()
         }
@@ -30,7 +38,12 @@ class NewsFragment : Fragment() {
 
     private fun save() {
         val text = binding.editText.text.toString().trim()
-        val news = News(text, System.currentTimeMillis())
+
+        if (news == null) {
+            news = News(text, System.currentTimeMillis())
+        } else {
+            news?.title = text
+        }
         val bundle = Bundle()
         bundle.putSerializable("news", news)
         // findNavController().navigate(R.id.navigation_home, bundle)

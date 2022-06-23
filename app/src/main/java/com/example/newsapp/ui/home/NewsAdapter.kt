@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.ItemNewsBinding
 import com.example.newsapp.models.News
 
-class NewsAdapter(private val onClick: (news: News) -> Unit) :
+class NewsAdapter(private val onClick: (position : Int) -> Unit) :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     private val list = arrayListOf<News>()
@@ -25,7 +25,7 @@ class NewsAdapter(private val onClick: (news: News) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
         holder.itemView.setOnClickListener {
-            onClick(list[position])
+            onClick(position)
         }
     }
 

@@ -20,8 +20,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = NewsAdapter {
-            //val news = adapter.getItem()
-            Toast.makeText(requireContext(), it.title, Toast.LENGTH_SHORT).show()
+            val news = adapter.getItem(it)
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+            val bundle = Bundle()
+            bundle.putSerializable("news", news)
+            findNavController().navigate(R.id.navigation_news, bundle)
         }
     }
 
