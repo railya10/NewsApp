@@ -27,7 +27,9 @@ class BoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BoardAdapter {
+
             findNavController().navigateUp()
+
         }
         binding.viewPager.adapter = adapter
 
