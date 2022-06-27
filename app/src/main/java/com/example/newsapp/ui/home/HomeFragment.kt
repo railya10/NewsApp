@@ -16,6 +16,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: NewsAdapter
+    private var changeable: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
             val bundle = Bundle()
             bundle.putSerializable("news", news)
             findNavController().navigate(R.id.navigation_news, bundle)
+            changeable = true
         }
     }
 
@@ -49,16 +51,25 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner
         ) { requestKey, bundle ->
             val news = bundle.getSerializable("news") as News
-            adapter.addItem(news)
-            Log.e("Home", "text {$news.title} ${news.createdAt}")
+            val position: Int? = null
+            if (changeable) {
+                position.let {
+                    if (it != null) {
+                        adapter.replaceItem(news, it)
+                    }
+                }
+            } else {
+                adapter.addItem(news)
+                //}
+                Log.e("Home", "text {$news.title} ${news.createdAt}")
 
+            }
+            binding.recyclerView.adapter = adapter
         }
-        binding.recyclerView.adapter = adapter
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //binding = null
+        override fun onDestroyView() {
+            super.onDestroyView()
+            //binding = null
+        }
     }
-}
