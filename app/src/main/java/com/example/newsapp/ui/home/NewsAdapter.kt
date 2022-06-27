@@ -10,7 +10,7 @@ import com.example.newsapp.models.News
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewsAdapter(private val onClick: (position : Int) -> Unit) :
+class NewsAdapter(private val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     private val list = arrayListOf<News>()
@@ -27,6 +27,14 @@ class NewsAdapter(private val onClick: (position : Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (position % 2 == 0) {
+            holder.itemView.setBackgroundColor(Color.WHITE)
+        } else {
+            holder.itemView.setBackgroundColor(Color.GRAY)
+        }
+        holder.itemView.setOnClickListener {
+            onClick(position)
+        }
         holder.bind(list[position])
         holder.itemView.setOnClickListener {
             onClick(position)
@@ -45,8 +53,8 @@ class NewsAdapter(private val onClick: (position : Int) -> Unit) :
         return list[pos]
     }
 
-    fun replaceItem(news: News,position: Int){
-        list.set(position,news)
+    fun replaceItem(news: News, position: Int) {
+        list.set(position, news)
         notifyItemChanged(position)
     }
 
@@ -56,22 +64,13 @@ class NewsAdapter(private val onClick: (position : Int) -> Unit) :
             binding.textTitle.text = news.title
             binding.textDate.text = getDate(news.createdAt, "dd MMM yyyy")
             binding.textTime.text = getDate(news.createdAt, "HH:mm,")
-
-            if (position % 2 ==0){
-                binding.root.setBackgroundColor(Color.WHITE)
-            }else{
-                binding.root.setBackgroundColor(Color.GRAY)
-            }
-            itemView.setOnClickListener {
-                onClick(position)
-            }
         }
-        fun getDate(milliSeconds: Long, dateFormat: String): String {
-            val formater = SimpleDateFormat(dateFormat)
 
+        fun getDate(milliSeconds: Long, dateFormat: String): String {
+            val formatter = SimpleDateFormat(dateFormat)
             val calendar = Calendar.getInstance();
             calendar.timeInMillis = milliSeconds;
-            return formater.format(calendar.time);
+            return formatter.format(calendar.time);
         }
 
     }
