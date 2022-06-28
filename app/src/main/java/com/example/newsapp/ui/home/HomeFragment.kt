@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentHomeBinding
 import com.example.newsapp.models.News
+import com.example.newsapp.ui.news.NewsAdapter
 
 class HomeFragment : Fragment() {
 
@@ -60,9 +61,7 @@ class HomeFragment : Fragment() {
                 }
             } else {
                 adapter.addItem(news)
-                //}
                 Log.e("Home", "text {$news.title} ${news.createdAt}")
-
             }
             binding.recyclerView.adapter = adapter
         }

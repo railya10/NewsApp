@@ -12,9 +12,30 @@
         android:layout_width="288dp"
         android:layout_height="288dp"
         android:src="@drawable/ic_gallery"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="Write your name here"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+
+        app:layout_constraintStart_toStartOf="@id/image_view"
+        app:layout_constraintTop_toBottomOf="@id/image_view" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/edit_text"
+        app:layout_constraintStart_toStartOf="@id/edit_text"
+        app:layout_constraintTop_toBottomOf="@id/edit_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

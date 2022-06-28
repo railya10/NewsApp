@@ -1,10 +1,9 @@
-package com.example.newsapp.ui.home
+package com.example.newsapp.ui.news
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapp.R
 import com.example.newsapp.databinding.ItemNewsBinding
 import com.example.newsapp.models.News
 import java.text.SimpleDateFormat
@@ -36,12 +35,10 @@ class NewsAdapter(private val onClick: (position: Int) -> Unit) :
             onClick(position)
         }
         holder.bind(list[position])
-        holder.itemView.setOnClickListener {
-            onClick(position)
-        }
     }
 
     override fun getItemCount() = list.size
+
     fun addItem(news: News) {
         list.add(0, news)
         notifyItemInserted(0)
