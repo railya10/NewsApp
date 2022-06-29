@@ -12,21 +12,21 @@ import com.example.newsapp.models.PagerModel
 class BoardAdapter(private val onCLickStart: () -> Unit) :
     RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
 
-    private val titles = arrayListOf<PagerModel>(
+    private val titlesSwipe = arrayListOf<PagerModel>(
         PagerModel(
             "Page 1",
             R.drawable.news1,
-            "This is the first page of my ViewPager"
+            "Swipe left"
         ),
         PagerModel(
             "Page 2",
             R.drawable.news2,
-            "This is the second page of my ViewPager"
+            "Swipe left again"
         ),
         PagerModel(
             "Page 3",
             R.drawable.news3,
-            "This is the third page of my ViewPager"
+            "Welcome to my NewsApp"
         )
     )
 
@@ -42,25 +42,23 @@ class BoardAdapter(private val onCLickStart: () -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(titles[position])
+        holder.bind(titlesSwipe[position])
 
     }
 
 
-    override fun getItemCount() = titles.size
+    override fun getItemCount() = titlesSwipe.size
 
 
     inner class ViewHolder(private var binding: PagerBoardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(titles : PagerModel) {
+        fun bind(titles: PagerModel) {
 
             binding.textTitle.text = titles.title
             binding.textDescription.text = titles.description
             Glide.with(binding.imageView).load(titles.image).into(binding.imageView)
-            //binding.textTitle.text = titles position
-            if (position == adapterPosition - 1) {
-                binding.btnStart.visibility = View.VISIBLE
-            } else {
+
+            if (adapterPosition != titlesSwipe.size -1) {
                 binding.btnStart.visibility = View.INVISIBLE
             }
             binding.btnStart.setOnClickListener {

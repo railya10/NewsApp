@@ -4,35 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="48dp"
+    android:background="@drawable/background"
+    android:paddingBottom="16dp"
     tools:context=".ui.board.BoardFragment">
 
     <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/view_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_skip"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_skip"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/black"
+        android:layout_height="32dp"
+        android:backgroundTint="@color/teal_700"
         android:text="Skip"
-        android:paddingBottom="64dp"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dotsIndicator" />
+        app:layout_constraintTop_toBottomOf="@+id/view_pager" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-        android:id="@+id/dotsIndicator"
+        android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:dotsColor="@color/white"
