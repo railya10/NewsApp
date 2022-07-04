@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.newsapp.App
 import com.example.newsapp.databinding.FragmentNewsBinding
 import com.example.newsapp.models.News
 
@@ -40,7 +41,8 @@ class NewsFragment : Fragment() {
         val text = binding.editText.text.toString().trim()
 
         if (news == null) {
-            news = News(text, System.currentTimeMillis())
+            news = News(0,text, System.currentTimeMillis())
+            App.database.newsDao().insert(news!!)
         } else {
             news?.title = text
         }

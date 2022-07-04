@@ -35,6 +35,11 @@ class ProfileFragment : Fragment() {
         textWatcher()
     }
 
+   /* override fun onPause() { перезаписать две строчки
+        super.onPause()
+
+    }*/
+
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             Glide.with(binding.imageView).load(uri).centerCrop().into(binding.imageView)

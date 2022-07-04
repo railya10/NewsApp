@@ -1,5 +1,7 @@
 package com.example.newsapp.ui.home
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,27 +10,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.newsapp.App
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentHomeBinding
 import com.example.newsapp.models.News
 import com.example.newsapp.ui.news.NewsAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.text.FieldPosition
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: NewsAdapter
     private var changeable: Boolean = false
-
+    private val adapter = NewsAdapter(this::onClick, this::onLongClick)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = NewsAdapter {
-            val news = adapter.getItem(it)
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-            val bundle = Bundle()
-            bundle.putSerializable("news", news)
-            findNavController().navigate(R.id.navigation_news, bundle)
-            changeable = true
-        }
+        adapter.addItems(App.database.newsDao().sortAll())
     }
 
     override fun onCreateView(
@@ -43,7 +40,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("Home", "OnViewCreated")
+        binding.recyclerView.adapter = adapter
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.navigation_news)
         }
@@ -63,12 +60,37 @@ class HomeFragment : Fragment() {
                 adapter.addItem(news)
                 Log.e("Home", "text {$news.title} ${news.createdAt}")
             }
-            binding.recyclerView.adapter = adapter
+
         }
     }
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-            //binding = null
-        }
+    private fun onClick(position: Int) {
+        val news = adapter.getItem(position)
+        Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        bundle.putSerializable("news", news)
+        findNavController().navigate(R.id.navigation_news, bundle)
+        changeable = true
     }
+
+    private fun onLongClick(news: News) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Notification")
+            .setMessage("Do you really want to delete item?")
+            .setNegativeButton("Cancel") { dialog, which ->
+                // Respond to negative button press
+            }
+            .setPositiveButton("Delete") { dialog, which ->
+                App.database.newsDao().deleteItem(news)
+                adapter.addItems(App.database.newsDao().sortAll())
+            }
+            .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        //binding = null
+    }
+
+}
+
