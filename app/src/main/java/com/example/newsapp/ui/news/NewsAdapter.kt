@@ -67,6 +67,10 @@ class NewsAdapter(
         notifyItemChanged(position)
     }
 
+    fun removeItem(news: News) {
+        this.list.remove(news)
+    }
+
 
     inner class ViewHolder(private var binding: ItemNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {
