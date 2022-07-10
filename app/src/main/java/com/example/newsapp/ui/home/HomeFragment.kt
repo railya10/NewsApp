@@ -83,7 +83,6 @@ class HomeFragment : Fragment() {
             .setPositiveButton("Delete") { dialog, which ->
                 App.database.newsDao().deleteItem(news)
                 adapter.removeItem(news)
-                //вставить увдаление из arraylist
                 adapter.addItems(App.database.newsDao().sortAll())
             }
             .show()

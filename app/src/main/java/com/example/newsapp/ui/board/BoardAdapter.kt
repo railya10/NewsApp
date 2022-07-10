@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.databinding.PagerBoardBinding
 import com.example.newsapp.models.PagerModel
@@ -12,24 +11,23 @@ import com.example.newsapp.models.PagerModel
 class BoardAdapter(private val onCLickStart: () -> Unit) :
     RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
 
-    private val titlesSwipe = arrayListOf<PagerModel>(
+    private val titlesSwipe = arrayListOf(
         PagerModel(
             "Page 1",
-            R.drawable.news1,
+            R.raw.lottie_one,
             "Swipe left"
         ),
         PagerModel(
             "Page 2",
-            R.drawable.news2,
+            R.raw.lottie_two,
             "Swipe left again"
         ),
         PagerModel(
             "Page 3",
-            R.drawable.news3,
+            R.raw.lottie_three,
             "Welcome to my NewsApp"
         )
     )
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -46,7 +44,6 @@ class BoardAdapter(private val onCLickStart: () -> Unit) :
 
     }
 
-
     override fun getItemCount() = titlesSwipe.size
 
 
@@ -56,14 +53,13 @@ class BoardAdapter(private val onCLickStart: () -> Unit) :
 
             binding.textTitle.text = titles.title
             binding.textDescription.text = titles.description
-            Glide.with(binding.imageView).load(titles.image).into(binding.imageView)
+            binding.animationView.setAnimation(titles.image)
 
-            if (adapterPosition != titlesSwipe.size -1) {
+            if (adapterPosition != titlesSwipe.size - 1) {
                 binding.btnStart.visibility = View.INVISIBLE
             }
             binding.btnStart.setOnClickListener {
                 onCLickStart()
-
             }
         }
     }

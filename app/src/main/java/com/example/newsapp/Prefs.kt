@@ -3,6 +3,7 @@ package com.example.newsapp
 import android.content.Context
 import android.text.Editable
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.edit
 
 class Prefs(context: Context) {
 
@@ -16,12 +17,14 @@ class Prefs(context: Context) {
         return preferences.getBoolean("isShown", false)
     }
 
-    //private fun textWatcher() {
-        fun afterTextChanged(p0: Editable?) {
-            preferences.edit().putString("name", p0.toString()).apply()
-        }
+    fun textWatcher(p0: Editable?) {
+        preferences.edit().putString("name", p0.toString()).apply()
     }
-//}
+
+    fun getTextWatcher(): String? {
+        return preferences.getString("name", "")
+    }
+}
 
 
 
