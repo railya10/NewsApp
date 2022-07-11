@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        if(FirebaseAuth.getInstance().currentUser == null) //узнаем человек авторизован или нет
+        navController.navigate(R.id.loginFragment) // если нет, то открываем фрагмент регистрации
 
         if (!Prefs(this).isShown()) {
             navController.navigate(R.id.boardFragment)
