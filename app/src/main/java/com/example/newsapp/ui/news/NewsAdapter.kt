@@ -9,13 +9,15 @@ import com.example.newsapp.models.News
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewsAdapter(
-    private val onClick: (position: Int) -> Unit,
-    private val onLongClick: (news: News) -> Unit
-) :
+class NewsAdapter(private val onClick:(position:Int)->Unit) :
+    //RecyclerView.Adapter<NewsAdapter.ViewHolder>()
+    //private val onClick: (position: Int) -> Unit,
+    //private val onLongClick: (news: News) -> Unit
+//) :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     private val list = arrayListOf<News>()
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -80,7 +82,7 @@ class NewsAdapter(
             binding.textTime.text = getDate(news.createdAt, "HH:mm,")
 
             itemView.setOnLongClickListener {
-                onLongClick(news)
+                //onLongClick(news)
                 return@setOnLongClickListener true
             }
         }

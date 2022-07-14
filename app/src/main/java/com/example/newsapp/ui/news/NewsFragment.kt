@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.App
 import com.example.newsapp.databinding.FragmentNewsBinding
 import com.example.newsapp.models.News
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class NewsFragment : Fragment() {
 
@@ -41,8 +44,10 @@ class NewsFragment : Fragment() {
         val text = binding.editText.text.toString().trim()
 
         if (news == null) {
-            news = News(0,text, System.currentTimeMillis())
+            news = News(0, text, System.currentTimeMillis())
             App.database.newsDao().insert(news!!)
+            addToFirestore (news!!)
+
         } else {
             news?.title = text
         }
@@ -50,6 +55,14 @@ class NewsFragment : Fragment() {
         bundle.putSerializable("news", news)
         // findNavController().navigate(R.id.navigation_home, bundle)
         parentFragmentManager.setFragmentResult("rk_news", bundle)
-        findNavController().navigateUp()
+
+    }
+
+    private fun addToFirestore(news: News) {
+        Firebase.firestore.collection("news").add(news).addOnSuccessListener {
+            documentReference ->
+        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+            findNavController().navigateUp()
+        }
     }
 }
